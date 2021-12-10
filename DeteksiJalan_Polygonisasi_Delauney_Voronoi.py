@@ -440,7 +440,7 @@ def main():
 if __name__ == "__main__":
     main()
     
-    filename = '52249_33932_16.png'
+    filename = '52247_33932_16.png'
     
     geos_info = filename[:-4].split('_')
     
