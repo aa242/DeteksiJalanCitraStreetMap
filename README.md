@@ -1,6 +1,6 @@
-**Readme
+**Readme**
 
-**Tentang program:
+**Tentang program:**
 Program ini adalah program untuk mendapatkan data jalan menggunakan data citra streetmap google imagery. Input program ini adalah sebuah citra dengan format penamaan: 
 x_y_z.png, dimana x merupakan koordinat tiles x, y merupakan koordinat tiles y, dan z merupakan level zoom citra tsb. Asumsi citra berukuran standard 256x256 piksel. 
 Output dari program ini adalah :
@@ -8,7 +8,7 @@ Output dari program ini adalah :
 2. (Opsional) List Gambar yang menggambarkan proses yang dilakukan dalam program, mulai dari pembentukan mask image, deteksi kontur, delauney triangulation, voronoi diagram dan result points
 3. (Opsional) SHP file yang berisi points dan lines yang berhasil terdeteksi.
 
-**Petunjuk penggunaan:
+**Petunjuk penggunaan:**
 
 Fungsi utama program ini terdapat pada file MainFunc_DeteksiJalanStreetMap.py, dengan fungsi utama :
 DeteksiJalanStreetMap(filename, outputPointsOnly=False, outputImages=False, outputSHP=False)
@@ -19,7 +19,7 @@ dengan input:
 3. outputImages = jika False, maka tidak akan mengoutputkan images progress pengolahan, spt hasil delauney triangulation
 4. outputSHP = jika False, maka tidak akan mengoutputkan file shp, misal untuk menghemat memory
 
-**Contoh penggunaan:
+**Contoh penggunaan:**
 
 Contoh penggunaan untuk data citra streetmap seluruh cimahi (di folder /data_Cimahi), diberikan sebagai contoh pada script TestFunc_DeteksiJalanStreetMap.py, dimana
 contoh penggunaanya untuk pemanggilan fungsi DeteksiImageStreetMap, sbb:
@@ -52,7 +52,7 @@ Output_SHP_Points(flat_list_points, fileout)
 Output_SHP_Lines(flat_list_edges, fileout)
 ```
 
-**Gambaran tahapan pengolahan program:
+**Gambaran tahapan pengolahan program:**
 
 1. Mask Detection
 
