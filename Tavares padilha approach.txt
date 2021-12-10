@@ -1,0 +1,80 @@
+# TAVARES and PADILHA approach
+def merge_line_segments(line_i, line_j, use_log=False):    
+    # line distance
+    line_i_length = math.hypot(line_i[1][0] - line_i[0][0], line_i[1][1] - line_i[0][1])
+    line_j_length = math.hypot(line_j[1][0] - line_j[0][0], line_j[1][1] - line_j[0][1])
+    
+    # centroids
+    Xg = line_i_length*(line_i[0][0]+line_i[1][0]) + line_j_length*(line_j[0][0]+line_j[1][0])
+    Xg /= 2 * (line_i_length + line_j_length)
+    
+    Yg = line_i_length*(line_i[0][1]+line_i[1][1]) + line_j_length*(line_j[0][1]+line_j[1][1])
+    Yg /= 2 * (line_i_length + line_j_length)
+    
+    # orientation
+    orientation_i = math.atan2((line_i[0][1]-line_i[1][1]),(line_i[0][0]-line_i[1][0]))
+    orientation_j = math.atan2((line_j[0][1]-line_j[1][1]),(line_j[0][0]-line_j[1][0]))    
+    orientation_r = math.pi
+    if(abs(orientation_i - orientation_j) <= math.pi/2):
+        orientation_r = line_i_length*orientation_i + line_j_length*orientation_j
+        orientation_r /= line_i_length + line_j_length
+    else:
+        orientation_r = line_i_length*orientation_i + line_j_length*(orientation_j - math.pi*orientation_j/abs(orientation_j))
+        orientation_r /= line_i_length + line_j_length
+    
+    # coordinate transformation
+    # δXG = (δy - yG)sinθr + (δx - xG)cosθr
+    # δYG = (δy - yG)cosθr - (δx - xG)sinθr
+    a_x_g = (line_i[0][1] - Yg)*math.sin(orientation_r) + (line_i[0][0] - Xg) * math.cos(orientation_r)
+    a_y_g = (line_i[0][1] - Yg)*math.cos(orientation_r) - (line_i[0][0] - Xg) * math.sin(orientation_r)
+    
+    b_x_g = (line_i[1][1] - Yg)*math.sin(orientation_r) + (line_i[1][0] - Xg) * math.cos(orientation_r)
+    b_y_g = (line_i[1][1] - Yg)*math.cos(orientation_r) - (line_i[1][0] - Xg) * math.sin(orientation_r)
+    
+    c_x_g = (line_j[0][1] - Yg)*math.sin(orientation_r) + (line_j[0][0] - Xg) * math.cos(orientation_r)
+    c_y_g = (line_j[0][1] - Yg)*math.cos(orientation_r) - (line_j[0][0] - Xg) * math.sin(orientation_r)
+    
+    d_x_g = (line_j[1][1] - Yg)*math.sin(orientation_r) + (line_j[1][0] - Xg) * math.cos(orientation_r)
+    d_y_g = (line_j[1][1] - Yg)*math.cos(orientation_r) - (line_j[1][0] - Xg) * math.sin(orientation_r)
+    
+    # line distance relative
+    line_i_rel_length = math.hypot(b_x_g - a_x_g, b_y_g - a_y_g)
+    line_j_rel_length = math.hypot(d_x_g - c_x_g, d_y_g - c_y_g)   
+    
+    # orthogonal projections over the axis X
+    start_f = min(a_x_g,b_x_g,c_x_g,d_x_g)
+    end_f = max(a_x_g,b_x_g,c_x_g,d_x_g)
+    length_f = math.hypot(end_f - start_f, 0 - 0)
+    
+    #start_f = line_i_rel_length * math.cos(orientation_r)
+    #end_f = line_j_rel_length * math.cos(orientation_r)
+    
+    start_x = int(Xg - start_f * math.cos(orientation_r))
+    start_y = int(Yg - start_f * math.sin(orientation_r))
+    end_x = int(Xg - end_f * math.cos(orientation_r))
+    end_y = int(Yg - end_f * math.sin(orientation_r))   
+    
+    # log process
+    if(use_log):    
+        print("distance between lines:", get_distance(line_i, line_j))
+        print("real lines angle:", math.degrees(orientation_i), math.degrees(orientation_j))
+        print("orientation angle:", math.degrees(orientation_r))
+        print("centroids:", Xg, Yg)      
+        print("relative lines length:", line_i_rel_length, line_j_rel_length) 
+        print("real lines length:", line_i_length, line_j_length)
+        print("final line length", length_f)
+        print("final line endpoints", (start_x, start_y), (end_x, end_y))
+        
+        # Create a black image
+        img = np.zeros((1400,3100,3), np.uint8)
+        img = cv2.line(img, line_i[0],line_i[1],(255,0,0),5)
+        img = cv2.line(img,line_j[0],line_j[1],(255,0,0),5)
+        plt.imshow(img)
+        plt.show()
+        
+        img = cv2.circle(img,(int(Xg),int(Yg)),10,(255,0,100),6)        
+        img = cv2.line(img, (start_x, start_y), (end_x, end_y),(255,0,255),5)
+        plt.imshow(img)
+        plt.show()
+    
+    return [(start_x, start_y), (end_x, end_y)]
