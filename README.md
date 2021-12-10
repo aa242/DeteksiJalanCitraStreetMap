@@ -82,5 +82,12 @@ Output_SHP_Lines(flat_list_edges, fileout)
 ![alt text](https://github.com/aa242/DeteksiJalanCitraStreetMap/blob/master/pointsJalan_streetmap_detJalan.jpg?raw=true)
 ![alt text](https://github.com/aa242/DeteksiJalanCitraStreetMap/blob/master/linesJalan_streetmap_detJalan.jpg?raw=true)
 
-Example Result untuk kota Cimahi:
+6. Konversi Points and Lines to geospatial coordinates
 
+![alt text](https://github.com/aa242/DeteksiJalanCitraStreetMap/blob/master/HasilPoints_OneImage.png?raw=true)
+![alt text](https://github.com/aa242/DeteksiJalanCitraStreetMap/blob/master/HasilLines_OneImage.png?raw=true)
+
+**Example Result untuk kota Cimahi:**
+
+![alt text](https://github.com/aa242/DeteksiJalanCitraStreetMap/blob/master/HasilPointsCimahi.png?raw=true)
+![alt text](https://github.com/aa242/DeteksiJalanCitraStreetMap/blob/master/HasilLinesCimahi.png?raw=true)
